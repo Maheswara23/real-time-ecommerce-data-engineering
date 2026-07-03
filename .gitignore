@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.pyc
+
+# Databricks
+.databricks/
+
+# Environment files
+.env
+.env.local
+
+# VS Code
+.vscode/
+
+# IntelliJ
+.idea/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Logs
+*.log
+
+# MySQL
+*.sql.bak
+
+# MongoDB
+*.wt
+
+# Spark
+spark-warehouse/
+
+# Delta Lake
+_delta_log/
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+
+# Power BI Auto Recovery
+*.pbix.autorecover
+
+# Temporary files
+temp/
+tmp/
+
+# Docker
+*.pid
