@@ -70,3 +70,43 @@ CREATE TABLE shipping_providers (
     contact_number VARCHAR(20),
     website VARCHAR(255)
 );
+
+-- CUSTOMERS TABLE 
+
+CREATE TABLE customers (
+    customer_id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    email VARCHAR(150) NOT NULL UNIQUE,
+    phone VARCHAR(20),
+    gender ENUM('Male', 'Female', 'Other'),
+    date_of_birth DATE,
+    street_address VARCHAR(255),
+    city VARCHAR(100),
+    state VARCHAR(100),
+    postal_code VARCHAR(20),
+    country VARCHAR(100),
+    registration_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    customer_status ENUM('Active','Inactive') DEFAULT 'Active',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- PRODUCTS TABLE 
+
+CREATE TABLE products (
+    product_id INT AUTO_INCREMENT PRIMARY KEY,
+    product_name VARCHAR(200) NOT NULL,
+    category_id INT NOT NULL,
+    supplier_id INT NOT NULL,
+    sku VARCHAR(50) NOT NULL UNIQUE,
+    brand VARCHAR(100),
+    unit_price DECIMAL(10,2) NOT NULL,
+    cost_price DECIMAL(10,2),
+    weight DECIMAL(8,2),
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP
+);
