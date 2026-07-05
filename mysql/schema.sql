@@ -5,8 +5,6 @@
 -- Description: Database schema for operational data
 -- =====================================================
 
-CREATE DATABASE ecommerce_db;
-
 USE ecommerce_db;
 
 -- ===========================
@@ -15,7 +13,7 @@ USE ecommerce_db;
 
 -- CATEGORY  TABLE 
 
-CREATE TABLE categories (
+CREATE TABLE IF NOT EXISTS categories (
     category_id INT AUTO_INCREMENT PRIMARY KEY,
     category_name VARCHAR(100) NOT NULL UNIQUE,
     description VARCHAR(255),
@@ -26,7 +24,7 @@ CREATE TABLE categories (
 
 -- SUPPLIERS TABLE 
 
-CREATE TABLE suppliers (
+CREATE TABLE IF NOT EXISTS suppliers (
     supplier_id INT AUTO_INCREMENT PRIMARY KEY,
     supplier_name VARCHAR(150) NOT NULL,
     contact_person VARCHAR(100),
@@ -42,7 +40,7 @@ CREATE TABLE suppliers (
 
 -- WAREHOUSES TABLE 
 
-CREATE TABLE warehouses (
+CREATE TABLE IF NOT EXISTS warehouses (
     warehouse_id INT AUTO_INCREMENT PRIMARY KEY,
     warehouse_name VARCHAR(100) NOT NULL,
     city VARCHAR(100),
@@ -56,7 +54,7 @@ CREATE TABLE warehouses (
 
 -- PAYMENT METHODS
 
-CREATE TABLE payment_methods (
+CREATE TABLE IF NOT EXISTS payment_methods (
     payment_method_id INT AUTO_INCREMENT PRIMARY KEY,
     method_name VARCHAR(50) NOT NULL UNIQUE,
     description VARCHAR(255)
@@ -64,7 +62,7 @@ CREATE TABLE payment_methods (
 
 -- SHIPPING PROVIDERS 
 
-CREATE TABLE shipping_providers (
+CREATE TABLE IF NOT EXISTS shipping_providers (
     provider_id INT AUTO_INCREMENT PRIMARY KEY,
     provider_name VARCHAR(100) NOT NULL,
     contact_number VARCHAR(20),
@@ -77,7 +75,7 @@ CREATE TABLE shipping_providers (
 
 -- CUSTOMERS TABLE 
 
-CREATE TABLE customers (
+CREATE TABLE IF NOT EXISTS customers (
     customer_id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
@@ -92,6 +90,8 @@ CREATE TABLE customers (
     country VARCHAR(100),
     registration_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     customer_status ENUM('Active','Inactive') DEFAULT 'Active',
+    loyalty_points INT DEFAULT 0,
+    is_prime_member BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ON UPDATE CURRENT_TIMESTAMP
@@ -99,7 +99,7 @@ CREATE TABLE customers (
 
 -- PRODUCTS TABLE 
 
-CREATE TABLE products (
+CREATE TABLE IF NOT EXISTS products (
     product_id INT AUTO_INCREMENT PRIMARY KEY,
     product_name VARCHAR(200) NOT NULL,
     category_id INT NOT NULL,
@@ -110,6 +110,8 @@ CREATE TABLE products (
     cost_price DECIMAL(10,2),
     weight DECIMAL(8,2),
     description TEXT,
+    is_active BOOLEAN DEFAULT TRUE,
+    rating DECIMAL(2,1),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ON UPDATE CURRENT_TIMESTAMP
@@ -121,7 +123,7 @@ CREATE TABLE products (
 
 -- ORDERS TABLE 
 
-CREATE TABLE orders (
+CREATE TABLE IF NOT EXISTS orders (
     order_id INT AUTO_INCREMENT PRIMARY KEY,
     customer_id INT NOT NULL,
     order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -146,7 +148,7 @@ CREATE TABLE orders (
 
 -- ORDER ITEMS TABLE 
 
-CREATE TABLE order_items (
+CREATE TABLE IF NOT EXISTS order_items (
     order_item_id INT AUTO_INCREMENT PRIMARY KEY,
 
     order_id INT NOT NULL,
@@ -168,7 +170,7 @@ CREATE TABLE order_items (
 
 -- PAYMENTS TABLE 
 
-CREATE TABLE payments (
+CREATE TABLE IF NOT EXISTS payments (
 
     payment_id INT AUTO_INCREMENT PRIMARY KEY,
 
@@ -196,7 +198,7 @@ CREATE TABLE payments (
 
 -- SHIPMENTS TABLE
 
-CREATE TABLE shipments (
+CREATE TABLE IF NOT EXISTS shipments (
 
     shipment_id INT AUTO_INCREMENT PRIMARY KEY,
 
@@ -216,6 +218,8 @@ CREATE TABLE shipments (
 
     shipped_date TIMESTAMP NULL,
 
+    estimated_delivery_date DATE,
+
     delivered_date TIMESTAMP NULL,
 
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -225,7 +229,7 @@ CREATE TABLE shipments (
 
 -- RETURNS TABLE 
 
-CREATE TABLE returns (
+CREATE TABLE IF NOT EXISTS returns (
 
     return_id INT AUTO_INCREMENT PRIMARY KEY,
 
@@ -257,7 +261,7 @@ CREATE TABLE returns (
 
 -- INVENTORY TABLE 
 
-CREATE TABLE inventory (
+CREATE TABLE IF NOT EXISTS inventory (
 
     inventory_id INT AUTO_INCREMENT PRIMARY KEY,
 
@@ -280,7 +284,7 @@ CREATE TABLE inventory (
 
 -- INVENTORY TRANSACTIONS TABLE 
 
-CREATE TABLE inventory_transactions (
+CREATE TABLE IF NOT EXISTS inventory_transactions (
 
     transaction_id INT AUTO_INCREMENT PRIMARY KEY,
 
@@ -300,4 +304,24 @@ CREATE TABLE inventory_transactions (
     remarks VARCHAR(255),
 
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- REVIEWS TABLE 
+
+CREATE TABLE reviews (
+
+review_id INT AUTO_INCREMENT PRIMARY KEY,
+
+customer_id INT,
+
+product_id INT,
+
+rating INT,
+
+review_title VARCHAR(100),
+
+review_text TEXT,
+
+review_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
 );
