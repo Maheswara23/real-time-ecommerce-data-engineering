@@ -1,0 +1,110 @@
+                                         ┌──────────────────────────────┐
+                                         │     E-Commerce Platform      │
+                                         │                              │
+                                         │ • Customer Registration      │
+                                         │ • Product Management         │
+                                         │ • Order Placement            │
+                                         │ • Payment Processing         │
+                                         │ • Shipment Tracking          │
+                                         │ • Product Reviews            │
+                                         └──────────────┬───────────────┘
+                                                        │
+                                                        ▼
+                                   ┌──────────────────────────────────────┐
+                                   │     Synthetic Data Generators        │
+                                   │                                      │
+                                   │ • customer_generator.py              │
+                                   │ • product_generator.py               │
+                                   │ • order_generator.py                 │
+                                   │ • payment_generator.py               │
+                                   │ • inventory_generator.py             │
+                                   │ • shipment_generator.py              │
+                                   │ • review_generator.py                │
+                                   └──────────────┬───────────────────────┘
+                                                  │
+                                                  ▼
+                                  ┌───────────────────────────────────────┐
+                                  │         Apache Kafka Cluster          │
+                                  │                                       │
+                                  │ customer_events                       │
+                                  │ product_events                        │
+                                  │ order_events                          │
+                                  │ payment_events                        │
+                                  │ inventory_events                      │
+                                  │ shipment_events                       │
+                                  │ review_events                         │
+                                  └──────────────┬────────────────────────┘
+                                                 │
+                          ┌──────────────────────┼──────────────────────────┐
+                          │                      │                          │
+                          ▼                      ▼                          ▼
+               ┌────────────────┐    ┌───────────────────┐      ┌─────────────────┐
+               │ Kafka Consumer │    │ Logging & Monitor │      │ Kafka UI        │
+               └────────┬───────┘    └───────────────────┘      └─────────────────┘
+                        │
+                        ▼
+          ┌────────────────────────────────────────────────────────────┐
+          │               MySQL Operational Database                   │
+          │                                                            │
+          │ Lookup Tables                                              │
+          │ • Categories                                               │
+          │ • Suppliers                                                │
+          │ • Warehouses                                               │
+          │ • Payment Methods                                          │
+          │ • Shipping Providers                                       │
+          │                                                            │
+          │ Master Tables                                              │
+          │ • Customers                                                │
+          │ • Products                                                 │
+          │                                                            │
+          │ Transaction Tables                                         │
+          │ • Orders                                                   │
+          │ • Order Items                                              │
+          │ • Payments                                                 │
+          │ • Shipments                                                │
+          │ • Returns                                                  │
+          │ • Reviews                                                  │
+          │                                                            │
+          │ Operational Tables                                         │
+          │ • Inventory                                                │
+          │ • Inventory Transactions                                   │
+          └─────────────────────────────┬───────────────────────────────┘
+                                        │
+                                        ▼
+                 ┌──────────────────────────────────────────────────────┐
+                 │             Databricks Structured Streaming          │
+                 │                (Apache Spark)                        │
+                 └─────────────────────────┬────────────────────────────┘
+                                           │
+      ┌────────────────────────────────────┼──────────────────────────────────┐
+      ▼                                    ▼                                  ▼
+┌─────────────────┐               ┌─────────────────┐               ┌─────────────────┐
+│ Bronze Layer    │               │ Silver Layer    │               │ Gold Layer      │
+│──────────────── │               │──────────────── │               │──────────────── │
+│ Raw Events      │──────────────▶│ Cleaned Data    │──────────────▶│ Business KPIs   │
+│ Append Only     │               │ Validation      │               │ Aggregations    │
+│ Audit Columns   │               │ Deduplication   │               │ Star Schema     │
+└─────────────────┘               └─────────────────┘               └─────────────────┘
+                                                                          │
+                                   ┌──────────────────────────────────────┴────────────────────────────────────┐
+                                   ▼                                                                           ▼
+                    ┌──────────────────────────────┐                                  ┌─────────────────────────┐
+                    │         MongoDB              │                                  │    SQL Analytics        │
+                    │                              │                                  │                         │
+                    │ Aggregated Collections       │                                  │ Business Queries        │
+                    │ Dashboard Collections        │                                  │ Performance Reports     │
+                    │ Product Documents            │                                  │ KPI Analysis            │
+                    └──────────────┬───────────────┘                                  └─────────────┬───────────┘
+                                   │                                                              │
+                                   └──────────────────────────────┬───────────────────────────────┘
+                                                                  ▼
+                                             ┌──────────────────────────────────────┐
+                                             │        Power BI Dashboard            │
+                                             │                                      │
+                                             │ • Sales Dashboard                    │
+                                             │ • Customer Dashboard                 │
+                                             │ • Inventory Dashboard                │
+                                             │ • Revenue Dashboard                  │
+                                             │ • Shipment Dashboard                 │
+                                             │ • Product Performance                │
+                                             └──────────────────────────────────────┘
