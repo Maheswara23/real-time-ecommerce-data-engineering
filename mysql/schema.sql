@@ -139,3 +139,110 @@ CREATE TABLE orders (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ON UPDATE CURRENT_TIMESTAMP
 );
+
+-- ORDER ITEMS TABLE 
+
+CREATE TABLE order_items (
+    order_item_id INT AUTO_INCREMENT PRIMARY KEY,
+
+    order_id INT NOT NULL,
+
+    product_id INT NOT NULL,
+
+    quantity INT NOT NULL,
+
+    unit_price DECIMAL(10,2) NOT NULL,
+
+    discount DECIMAL(10,2) DEFAULT 0,
+
+    subtotal DECIMAL(10,2) NOT NULL,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- PAYMENTS TABLE 
+
+CREATE TABLE payments (
+
+    payment_id INT AUTO_INCREMENT PRIMARY KEY,
+
+    order_id INT NOT NULL,
+
+    payment_method_id INT NOT NULL,
+
+    payment_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    amount DECIMAL(10,2) NOT NULL,
+
+    payment_status ENUM(
+        'Pending',
+        'Success',
+        'Failed',
+        'Refunded'
+    ) DEFAULT 'Pending',
+
+    transaction_reference VARCHAR(100),
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- SHIPMENTS TABLE
+
+CREATE TABLE shipments (
+
+    shipment_id INT AUTO_INCREMENT PRIMARY KEY,
+
+    order_id INT NOT NULL,
+
+    provider_id INT NOT NULL,
+
+    tracking_number VARCHAR(100),
+
+    shipment_status ENUM(
+        'Pending',
+        'Packed',
+        'Dispatched',
+        'In Transit',
+        'Delivered'
+    ) DEFAULT 'Pending',
+
+    shipped_date TIMESTAMP NULL,
+
+    delivered_date TIMESTAMP NULL,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- RETURNS TABLE 
+
+CREATE TABLE returns (
+
+    return_id INT AUTO_INCREMENT PRIMARY KEY,
+
+    order_id INT NOT NULL,
+
+    product_id INT NOT NULL,
+
+    return_reason VARCHAR(255),
+
+    return_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    refund_amount DECIMAL(10,2),
+
+    return_status ENUM(
+        'Requested',
+        'Approved',
+        'Rejected',
+        'Completed'
+    ) DEFAULT 'Requested',
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP
+);
