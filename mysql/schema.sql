@@ -110,3 +110,32 @@ CREATE TABLE products (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ON UPDATE CURRENT_TIMESTAMP
 );
+
+-- =================================
+-- TRANSACTION TABLES IN DATABASE 
+-- =================================
+
+-- ORDERS TABLE 
+
+CREATE TABLE orders (
+    order_id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id INT NOT NULL,
+    order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    order_status ENUM(
+        'Pending',
+        'Confirmed',
+        'Processing',
+        'Shipped',
+        'Delivered',
+        'Cancelled',
+        'Returned'
+    ) DEFAULT 'Pending',
+
+    total_amount DECIMAL(10,2) NOT NULL,
+    shipping_address VARCHAR(255),
+    billing_address VARCHAR(255),
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP
+);
