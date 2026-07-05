@@ -1,0 +1,29 @@
+                           LOOKUP TABLES
+┌──────────────┐   ┌──────────────┐   ┌─────────────────┐
+│ Categories   │   │ Suppliers    │   │ Warehouses      │
+└──────────────┘   └──────────────┘   └─────────────────┘
+         │                  │                   │
+         │                  │                   │
+         └──────────┬───────┘                   │
+                    ▼                           │
+             ┌──────────────┐                  │
+             │ Products     │◄─────────────────┘
+             └──────────────┘
+                    │
+      ┌─────────────┼───────────────┐
+      ▼             ▼               ▼
+ Inventory      Order Items      Reviews
+      │             ▲               ▲
+      ▼             │               │
+Inventory      Orders───────────────┘
+Transactions      ▲
+                  │
+             Customers
+
+                  │
+        ┌─────────┼───────────┐
+        ▼         ▼           ▼
+    Payments  Shipments   Returns
+        ▲          ▲
+        │          │
+Payment Methods Shipping Providers
