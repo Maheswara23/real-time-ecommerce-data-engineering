@@ -10,7 +10,7 @@ CREATE DATABASE ecommerce_db;
 USE ecommerce_db;
 
 -- ===========================
--- MASTER TABLES IN DATABASE 
+-- LOOKUP TABLES IN DATABASE 
 -- ===========================
 
 -- CATEGORY  TABLE 
@@ -70,6 +70,10 @@ CREATE TABLE shipping_providers (
     contact_number VARCHAR(20),
     website VARCHAR(255)
 );
+
+-- ===========================
+-- MASTER TABLES IN DATABASE 
+-- ===========================
 
 -- CUSTOMERS TABLE 
 
@@ -245,4 +249,55 @@ CREATE TABLE returns (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- ================================
+-- OPERATIONAL TABLES IN DATABASE 
+-- ================================
+
+-- INVENTORY TABLE 
+
+CREATE TABLE inventory (
+
+    inventory_id INT AUTO_INCREMENT PRIMARY KEY,
+
+    product_id INT NOT NULL,
+
+    warehouse_id INT NOT NULL,
+
+    quantity_in_stock INT NOT NULL DEFAULT 0,
+
+    reorder_level INT DEFAULT 10,
+
+    last_stock_update TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP
+
+);
+
+-- INVENTORY TRANSACTIONS TABLE 
+
+CREATE TABLE inventory_transactions (
+
+    transaction_id INT AUTO_INCREMENT PRIMARY KEY,
+
+    inventory_id INT NOT NULL,
+
+    transaction_type ENUM(
+        'PURCHASE',
+        'SALE',
+        'RETURN',
+        'ADJUSTMENT'
+    ) NOT NULL,
+
+    quantity_changed INT NOT NULL,
+
+    transaction_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    remarks VARCHAR(255),
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
